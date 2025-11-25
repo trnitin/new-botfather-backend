@@ -123,6 +123,32 @@ if (cluster.isPrimary) {
     res.status(status).send(error);
   });
 
+  // retries functionality instead of infinite process loop when db connection fails
+//   async function startWorker() {
+//   let retries = 5;
+
+//   while (retries) {
+//     try {
+//       await MongoConnect();
+//       console.log(`Worker ${process.pid} connected to MongoDB`);
+      
+//       app.listen(PORT, () =>
+//         console.log(`Worker ${process.pid} listening on port ${PORT}`)
+//       );
+
+//       return; // success → stop retrying
+//     } catch (err) {
+//       retries--;
+//       console.error(`MongoDB connection failed. Retries left: ${retries}`, err);
+//       await new Promise((res) => setTimeout(res, 3000)); // wait 3 sec
+//     }
+//   }
+
+//   console.error("MongoDB connection permanently failed. Shutting down worker.");
+//   process.exit(1);
+// }
+
+
   // Async start: connect to MongoDB first
   async function startWorker() {
     try {
@@ -138,3 +164,4 @@ if (cluster.isPrimary) {
 
   startWorker();
 }
+
